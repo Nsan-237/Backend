@@ -1,0 +1,26 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Nsan-237/my_app#readme",
+  "bugs": {
+    "url": "https://github.com/Nsan-237/my_app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nsan-237/my_app.git"
+  },
+  "license": "ISC",
+  "author": "devtool",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongoose": "^8.17.1",
+    "nodemon": "^3.1.10"
+  }
+}
