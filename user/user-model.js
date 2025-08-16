@@ -11,8 +11,8 @@ const userSchema = new Schema({
         unique: true,
     },
     password: {
-        type:{type:String,
-        required: true},  
+        type:"String",
+        required: true0,  
         },
     accountStatus: {
         type: "String",
