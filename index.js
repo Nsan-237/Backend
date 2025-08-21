@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose= require('mongoose');
+const userRoutes = require('./user/user-route');
 const app = express();
 const port = 4000;
 
@@ -14,6 +15,10 @@ if (conn){
 else{
     console.log("Database connection failed");
 }
+//Define our user routes
+
+app.use('/api/user', userRoutes);
+
 
 app.listen(port, () => {
     console.log(`Server is running on:${port}`);
