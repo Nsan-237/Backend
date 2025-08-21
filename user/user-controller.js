@@ -19,4 +19,5 @@ const user = await userModel.create({
 });
 return res.status(201).json({message:"User created successfully",user});
 }
+
 }
