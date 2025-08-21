@@ -10,4 +10,5 @@ router.post("/login", LoginController);
 
 //Forget password route
 router.post("/forget-password", ForgetPasswordController);
+//Export the router
 module.exports = router;
