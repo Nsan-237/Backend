@@ -6,6 +6,7 @@ const {username,useremail,userpassword} = req.body;
 if(!username || !useremail || !userpassword){
     return res.status(400).json({message:"All fields are required"});
 }
+
 const userExist = await userModel.findOne({email:useremail})
 
 if(userExist){
