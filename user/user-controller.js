@@ -1,6 +1,8 @@
 const userModel = require("./user-model");
+const bcrypt = require("bcrypt");
 module.exports = { 
-    signupController:async(req, res)=>{
+//Signup controller    
+signupController:async(req, res)=>{
 const {username,useremail,userpassword} = req.body;
 
 if(!username || !useremail || !userpassword){
@@ -12,13 +14,42 @@ const userExist = await userModel.findOne({email:useremail})
 if(userExist){
     return res.status(400).json({message:"User already exist"});
 }
-
+const hashedPassword = await bcrypt.hash(userpassword, 10);
 const user = await userModel.create({
     name:username,
     email:useremail,
-    password:userpassword
+    password:hashedPassword,
+    accountStatus:"active"
 });
 return res.status(201).json({message:"User created successfully",user});
+},
+//Login controller
+LoginController:async(req, res)=>{
+const {useremail,userpassword}=req.body;
+if(!useremail || !userpassword){
+    return res.status(400).json({message:"All fields are required"});
 }
-
+const user = await userModel.findOne({email:useremail});
+if(!user){
+    return res.status(400).json({message:"User not found"});
+}
+// Compare the password and the hashed password
+const isPasswordValid = await bcrypt.compare(userpassword, user.password);
+if(!isPasswordValid){
+    return res.status(400).json({message:"Invalid password"});
+}
+return res.status(200).json({message:"Login successful",user});
+},
+//Forget user password controller
+ForgetPasswordController:async(req, res)=>{
+    const {useremail}=req.body;
+    if(!useremail){
+        return res.status(400).json({message:"All fields are required"});
+    }
+    const user = await userModel.findOne({email:useremail});
+    if(!user){
+        return res.status(400).json({message:"User not found"});
+    }
+    return res.status(200).json({message:"Password reset link sent to your email"});
+}
 }
