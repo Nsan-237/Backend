@@ -1,6 +1,7 @@
 const userModel = require("./user-model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+<<<<<<< HEAD
 const expressJwt = require("express-jwt");
 const { validationResult } = require("express-validator");
 module.exports = { 
@@ -12,6 +13,11 @@ signupController:async(req, res)=>{
 //     return res.status(201).json({error:errors.array()[0].msg});
 // }
 
+=======
+module.exports = { 
+//Signup controller    
+signupController:async(req, res)=>{
+>>>>>>> d11939f98713ddbc3bfb22ab6e999cff6b6f06b8
 const {username,useremail,userpassword,userphone,userrole} = req.body;
 
 if(!username || !useremail || !userpassword){
@@ -32,7 +38,11 @@ const user = await userModel.create({
     role: "client",
     //accountStatus:"active"
 });
+<<<<<<< HEAD
   return res.status(201).json({message:"User created successfully",data:user});
+=======
+return res.status(201).json({message:"User created successfully",data:user});
+>>>>>>> d11939f98713ddbc3bfb22ab6e999cff6b6f06b8
 },
 //Login/Signin controller
 LoginController:async(req, res)=>{
@@ -54,6 +64,12 @@ return res.status(200).json({message:"Login successful",user, token});}
 catch(error){
     return res.status(500).json({message:"Server error", error: error.message});  
 }
+<<<<<<< HEAD
+=======
+const token = jwt.sign({id:user._id},"samuel",{expiresIn:"24h"});
+
+return res.status(200).json({message:"Login successful",user, token});
+>>>>>>> d11939f98713ddbc3bfb22ab6e999cff6b6f06b8
 },
 
 //Logout/Signout controller
