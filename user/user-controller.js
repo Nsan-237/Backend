@@ -1,9 +1,10 @@
 const userModel = require("./user-model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 module.exports = { 
 //Signup controller    
 signupController:async(req, res)=>{
-const {username,useremail,userpassword} = req.body;
+const {username,useremail,userpassword,userphone,userrole} = req.body;
 
 if(!username || !useremail || !userpassword){
     return res.status(400).json({message:"All fields are required"});
@@ -18,10 +19,12 @@ const hashedPassword = await bcrypt.hash(userpassword, 10);
 const user = await userModel.create({
     name:username,
     email:useremail,
+    phone: userphone,
     password:hashedPassword,
-    accountStatus:"active"
+    role: "client",
+    //accountStatus:"active"
 });
-return res.status(201).json({message:"User created successfully",user});
+return res.status(201).json({message:"User created successfully",data:user});
 },
 //Login controller
 LoginController:async(req, res)=>{
@@ -38,7 +41,9 @@ const isPasswordValid = await bcrypt.compare(userpassword, user.password);
 if(!isPasswordValid){
     return res.status(400).json({message:"Invalid password"});
 }
-return res.status(200).json({message:"Login successful",user});
+const token = jwt.sign({id:user._id},"samuel",{expiresIn:"24h"});
+
+return res.status(200).json({message:"Login successful",user, token});
 },
 //Forget user password controller
 ForgetPasswordController: async (req, res) => {
