@@ -4,14 +4,14 @@ const userRoutes = require('./user/user-route');
 const app = express();
 const port = 4000;
 
-mongoose.connect("mongodb://localhost:27017/interns",{
+mongoose.connect("mongodb://localhost:27017/zerodech",{
 });
 
 const conn = mongoose.connection;
-//cONNECTION ESTABLISHED
+//CONNECTION ESTABLISHED
 if (conn){
     console.log("Database connection sucessfull");
-}
+} 
 else{
     console.log("Database connection failed");
 }

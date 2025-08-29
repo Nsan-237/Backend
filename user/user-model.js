@@ -1,5 +1,8 @@
 const mongoose= require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 
 const userSchema = new Schema({
     name: {
@@ -8,17 +11,29 @@ const userSchema = new Schema({
     },
     email: {
         type:"String",
+        required: true,
         unique: true,
+    },
+    phone: {
+        type:"String",
+        required: true,
     },
     password: {
         type:"String",
         required: true,  
         },
-    accountStatus: {
+    role: {
         type: "String",
-        enum: ["active","inactive"],
-        default: "inactive"
-    },
+        enum: ["client", "collector"],
+        default: "client"
+    },    
+    // accountStatus: {
+    //     type: "String",
+    //     enum: ["active","inactive"],
+    //     default: "inactive"
+    // },
+    
 },{timestamps: true});
+   
 
 module.exports = mongoose.model('User', userSchema);

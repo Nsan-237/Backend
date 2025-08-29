@@ -1,9 +1,18 @@
 const userModel = require("./user-model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
+const { validationResult } = require("express-validator");
 module.exports = { 
 //Signup controller    
 signupController:async(req, res)=>{
-const {username,useremail,userpassword} = req.body;
+
+// const errors = validationResult(req);
+// if(!errors.isEmpty()){
+//     return res.status(201).json({error:errors.array()[0].msg});
+// }
+
+const {username,useremail,userpassword,userphone,userrole} = req.body;
 
 if(!username || !useremail || !userpassword){
     return res.status(400).json({message:"All fields are required"});
@@ -18,28 +27,43 @@ const hashedPassword = await bcrypt.hash(userpassword, 10);
 const user = await userModel.create({
     name:username,
     email:useremail,
+    phone: userphone,
     password:hashedPassword,
-    accountStatus:"active"
+    role: "client",
+    //accountStatus:"active"
 });
-return res.status(201).json({message:"User created successfully",user});
+  return res.status(201).json({message:"User created successfully",data:user});
 },
-//Login controller
+//Login/Signin controller
 LoginController:async(req, res)=>{
-const {useremail,userpassword}=req.body;
-if(!useremail || !userpassword){
-    return res.status(400).json({message:"All fields are required"});
-}
-const user = await userModel.findOne({email:useremail});
+  try{
+const {email,userpassword}=req.body;
+const user = await userModel.findOne({email:email});
+
 if(!user){
-    return res.status(400).json({message:"User not found"});
+    return res.status(400).json({message:"Invalid credentials"});
 }
 // Compare the password and the hashed password
 const isPasswordValid = await bcrypt.compare(userpassword, user.password);
 if(!isPasswordValid){
-    return res.status(400).json({message:"Invalid password"});
+    return res.status(400).json({message:"Invalid credentials"});
 }
-return res.status(200).json({message:"Login successful",user});
+const token = jwt.sign({id:user._id},"samuel",{expiresIn:"24h"});
+
+return res.status(200).json({message:"Login successful",user, token});}
+catch(error){
+    return res.status(500).json({message:"Server error", error: error.message});  
+}
 },
+
+//Logout/Signout controller
+  LogoutController: async (req, res) => {
+    res.clearCookie("token");
+    res.json({
+      message: "Signout success"
+    });
+  },
+
 //Forget user password controller
 ForgetPasswordController: async (req, res) => {
   try {
