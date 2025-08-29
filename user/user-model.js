@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const userSchema = new Schema({
     name: {
         type:"String",
-        required: true // for validation purposes
+        required: true 
     },
     email: {
         type:"String",
@@ -32,10 +32,7 @@ const userSchema = new Schema({
     //     enum: ["active","inactive"],
     //     default: "inactive"
     // },
-<<<<<<< HEAD
     
-=======
->>>>>>> d11939f98713ddbc3bfb22ab6e999cff6b6f06b8
 },{timestamps: true});
    
 
