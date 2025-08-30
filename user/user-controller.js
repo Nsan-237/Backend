@@ -33,14 +33,17 @@ const user = await userModel.create({
 //Login/Signin controller
 LoginController:async(req, res)=>{
   try{
-const {email,userpassword}=req.body;
+const {email,password}=req.body;
 const user = await userModel.findOne({email:email});
+
+console.log("user login req:",req.body);
+
 
 if(!user){
     return res.status(400).json({message:"Invalid credentials"});
 }
 // Compare the password and the hashed password
-const isPasswordValid = await bcrypt.compare(userpassword, user.password);
+const isPasswordValid = await bcrypt.compare(password, user.password);
 if(!isPasswordValid){
     return res.status(400).json({message:"Invalid credentials"});
 }
