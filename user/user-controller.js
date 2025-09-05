@@ -10,7 +10,7 @@ signupController:async(req, res)=>{
 
 const {username,useremail,userpassword,userphone,userrole} = req.body;
 
-if(!username || !useremail || !userpassword){
+if(!username || !useremail || !userpassword, !userrole){
     return res.status(400).json({message:"All fields are required"});
 }
 
@@ -25,7 +25,7 @@ const user = await userModel.create({
     email:useremail,
     phone: userphone,
     password:hashedPassword,
-    role: "client",
+    role: userrole,
     //accountStatus:"active"
 });
   return res.status(201).json({message:"User created successfully",data:user});
@@ -72,7 +72,7 @@ ForgetPasswordController: async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    const user = await userModel.findOne({ email: useremail });
+    const user = await userModel.findOne({ email: email });
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
