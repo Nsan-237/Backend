@@ -8,12 +8,12 @@ const { checkIfUserIsAuthenticated } = require("../middleware/authorizationMiddl
 router.post('/',checkIfUserIsAuthenticated, NewSubscription);
 
 // Get all subscriptions
-router.get('/getSubcriptions', GetSubscriptions);
+router.get('/getSubscription', GetSubscriptions);
 
 // Update subscription
-router.put('/subscriptions/:subscription_id', UpdateSubscription);
+router.put('/updateSubscription/:subscription_id', UpdateSubscription);
 
 // Delete subscription
-router.delete('/subscriptions/:subscription_id', DeleteSubscription);
+router.delete('/deleteSubscription/:subscription_id', DeleteSubscription);
 
 module.exports = router;

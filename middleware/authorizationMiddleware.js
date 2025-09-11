@@ -11,7 +11,7 @@ const checkIfUserIsAuthenticated = (req, res, next) => {
           return res.status(401).json({ message: "Unauthorized" });
         }
         const decodedToken = jwt.verify(token, process.env.SECRET);
-        console.log(decodedToken.user, "decoded token");
+        console.log(decodedToken.userb, "decoded token");
         
         if (!decodedToken) {
           return res.status(401).json({ message: "Malformed token " });

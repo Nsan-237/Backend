@@ -68,9 +68,19 @@ GetSubscriptions: async (req, res) => {
     try {
       const { subscription_id } = req.params;
       const updates = req.body;
-
+      console.log(updates, "updates");
+      
+    if (!updates || Object.keys(updates).length === 0)
+    {
+        return res.status(400).json({
+          success: false,
+          message: "No updates provided",
+        });
+    }
+    console.log(subscription_id, "subscription_id");
+    
       const subscription = await Subscription.findOneAndUpdate(
-        { subscription_id },
+  {_id: subscription_id},
         updates,
         { new: true, runValidators: true }
       );
@@ -102,9 +112,9 @@ GetSubscriptions: async (req, res) => {
       const { subscription_id } = req.params;
 
       const subscription = await Subscription.findOneAndDelete({
-        subscription_id,
+        _id: subscription_id
       });
-
+        console.log(subscription, "subscription");
       if (!subscription) {
         return res.status(404).json({
           success: false,
