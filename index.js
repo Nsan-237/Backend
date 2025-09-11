@@ -1,6 +1,10 @@
 const express = require('express');
 const mongoose= require('mongoose');
 const userRoutes = require('./user/user-route');
+const subscriptionRoutes = require('./subscription/subscription-route');
+const dotenv = require('dotenv');
+dotenv.config();
+
 const app = express();
 const port = 4000;
 
@@ -21,6 +25,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //Define our user routes
 app.use('/api/user', userRoutes);
+//Define our subscription routes
+app.use('/api/subscription', subscriptionRoutes);
 
 
 

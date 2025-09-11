@@ -6,8 +6,6 @@ const { validationResult } = require("express-validator");
 module.exports = { 
 //Signup controller    
 signupController:async(req, res)=>{
-
-
 const {username,useremail,userpassword,userphone,userrole} = req.body;
 
 if(!username || !useremail || !userpassword, !userrole){
@@ -47,7 +45,7 @@ const isPasswordValid = await bcrypt.compare(password, user.password);
 if(!isPasswordValid){
     return res.status(400).json({message:"Invalid credentials"});
 }
-const token = jwt.sign({id:user._id},"samuel",{expiresIn:"24h"});
+const token = jwt.sign({user}, process.env.SECRET,{expiresIn:"24h"});
 
 return res.status(200).json({message:"Login successful",user, token});}
 catch(error){
