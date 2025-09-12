@@ -5,13 +5,12 @@ const { checkIfUserIsAuthenticated } = require("../middleware/authorizationMiddl
 
 
 // Create a new subscription
-router.post('/newSubscription',checkIfUserIsAuthenticated, NewSubscription);
-
-// Get all subscriptions
-router.get('/getSubscription', GetSubscriptions);
+router.route("/")
+      .post(checkIfUserIsAuthenticated, NewSubscription)
+      .get(GetSubscriptions);
 
 // Update subscription
-router.put('/updateSubscription/:subscription_id', UpdateSubscription);
+router.route("/:id").put(UpdateSubscription);
 
 // Delete subscription
 router.delete('/deleteSubscription/:subscription_id', DeleteSubscription);

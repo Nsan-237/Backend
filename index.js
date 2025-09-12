@@ -19,6 +19,10 @@ if (conn){
 else{
     console.log("Database connection failed");
 }
+
+app.get('/', (req, res) => {
+    res.send('<center><h1 style="background-color:blue; color:white;">Welcome to ZeroDech API</h1></center>');
+});
 //Middleware to parse JSON bodies
 app.use(express.json());
 //Middleware to parse URL-encoded bodies
