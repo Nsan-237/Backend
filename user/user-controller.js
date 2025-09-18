@@ -6,7 +6,7 @@ const { validationResult } = require("express-validator");
 module.exports = { 
 //Signup controller    
 signupController:async(req, res)=>{
-const {username,useremail,userpassword,userphone,userrole} = req.body;
+const {username,useremail,userlocation,userpassword,userphone,userrole} = req.body;
 
 if(!username || !useremail || !userpassword, !userrole){
     return res.status(400).json({message:"All fields are required"});
@@ -21,6 +21,7 @@ const hashedPassword = await bcrypt.hash(userpassword, 10);
 const user = await userModel.create({
     name:username,
     email:useremail,
+    location: userlocation,
     phone: userphone,
     password:hashedPassword,
     role: userrole,
@@ -86,5 +87,19 @@ ForgetPasswordController: async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Server error", error: error.message });
   }
-}
+},
+GetUser: async (req, res) => {
+
+    try {
+      const userId = req.params.userId;
+      const user = await userModel.findById(userId);
+     
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(500).json({ message: "Server error", error: error.message });
+    }
+  }
 }

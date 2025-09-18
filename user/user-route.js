@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {check} = require('express-validator');
-const {signupController,LoginController,ForgetPasswordController,LogoutController} = require("./user-controller");
+const User = require('./user-model');
+const {signupController,LoginController,ForgetPasswordController,LogoutController,GetUser} = require("./user-controller");
 
 //Signup route
 router.post("/signup", 
@@ -23,5 +24,29 @@ router.post("/login", [
     router.get("/logout",LogoutController);
 //Forget password route
 router.post("/forget-password", ForgetPasswordController);
+
+//Get user route
+router.get("/getUser", GetUser);
+
+//Get user route
+// backend/routes/user.js
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     if (!mongoose.Types.ObjectId.isValid(id)) {
+//       return res.status(400).json({ error: "Invalid user ID" });
+//     }
+
+//     const user = await User.findById(id);
+//     if (!user) return res.status(404).json({ error: "User not found" });
+
+//     res.json(user);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+
 //Export the router
 module.exports = router;
