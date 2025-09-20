@@ -15,12 +15,10 @@ const userSchema = new Schema({
         unique: true,
     },
     location:{
-        type:"String",
-        required: true
+        type:"String"
     },
     phone: {
-        type:"String",
-        required: true,
+        type:"String"
     },
     password: {
         type:"String",
@@ -31,11 +29,11 @@ const userSchema = new Schema({
         enum: ["client", "collector", "admin"],
         default: "client"
     },    
-    // accountStatus: {
-    //     type: "String",
-    //     enum: ["active","inactive"],
-    //     default: "inactive"
-    // }
+    subscription: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Subscription',
+            required: true
+        }],
     
 },{timestamps: true});
    

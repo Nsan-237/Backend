@@ -3,32 +3,63 @@ const Schema = mongoose.Schema;
 
 // Subscription Schema
 const subscriptionSchema = new Schema({
-    plan: {
-        type: "String",
-        required: true
-    },
-    price: {
-        type: "String",
-        required: true
-    },
-    duration: {
-        type: "String", // duration in days
-        required: true
-    },
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    features: {
-        type: [String],
-        required: true
-    },
-    status: {
-        type: "String",
-        enum: ["active", "inactive", "pending"],
-        default: "pending"
+// Plan name            
+plan: {
+    type: "String",
+    required: true
+},
+     // Current price
+price: { 
+    type: "String",
+    required: true
+},
+duration: {
+    type: "String", // e.g. "1 month"
+    required: true
+},
+userId: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+}],
+features: {
+    type: [String],
+    required: true
+},
+status: {
+    type: String,
+    enum: ["active", "inactive", "pending"],
+    default: "pending"
+},
+    // Original price (optional)
+originalPrice: { 
+    type: "Number" 
+},
+// e.g., "25L"                  
+bucketSize: { 
+    type: "String", 
+    required: true 
+}, 
+// e.g., "2 times per week"
+frequency: { 
+    type: "String", 
+    required: true 
+}, 
+  // Array of features    
+features: { 
+    type: [String], 
+    required: true 
+}, 
+  // Most popular badge   
+popular: { 
+    type: Boolean, 
+    default: false 
+},  
+ subscribedAt: { 
+    type: Date, 
+    default: Date.now 
     }
 }, {timestamps: true});
-// Create Subscription model
+
+
 module.exports = mongoose.model('Subscription', subscriptionSchema);

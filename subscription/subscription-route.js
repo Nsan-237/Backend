@@ -1,19 +1,31 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { NewSubscription, GetSubscriptions, UpdateSubscription, DeleteSubscription } = require("./subscription-controller");
+const { 
+  NewSubscription, 
+  SubscribeToPlan, 
+  GetSubscriptions, 
+  GetMySubscriptions, 
+  UpdateSubscription, 
+  DeleteSubscription 
+} = require("./subscription-controller");
 const { checkIfUserIsAuthenticated } = require("../middleware/authorizationMiddleware");
 
+// Admin creates a new plan
+router.post("/newSubscription", checkIfUserIsAuthenticated, NewSubscription);
 
-// Create a new subscription
-router.post('/newSubscription',checkIfUserIsAuthenticated, NewSubscription);
+// Client subscribes to a plan
+router.post("/subscribeToPlan", SubscribeToPlan);
 
-// Get all subscriptions
-router.get('/getSubscription', GetSubscriptions);
+// Get all plans
+router.get("/getSubscriptions", GetSubscriptions);
 
-// Update subscription
-router.put('/updateSubscription/:subscription_id', UpdateSubscription);
+// Get my subscriptions (client)
+router.get("/mySubscriptions",  GetMySubscriptions);
 
-// Delete subscription
-router.delete('/deleteSubscription/:subscription_id', DeleteSubscription);
+// Update plan
+router.put("/updateSubscription/:subscription_id", UpdateSubscription);
+
+// Delete plan
+router.delete("/deleteSubscription/:subscription_id",  DeleteSubscription);
 
 module.exports = router;
