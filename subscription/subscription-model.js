@@ -34,7 +34,7 @@ status: {
     // Original price (optional)
 originalprice: { 
     type: "Number",
-    required: "true" 
+    required: false 
 },
 // e.g., "25L"                  
 bucketsize: { 

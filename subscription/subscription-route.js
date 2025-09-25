@@ -14,7 +14,7 @@ const { checkIfUserIsAuthenticated } = require("../middleware/authorizationMiddl
 router.post("/newSubscription", checkIfUserIsAuthenticated, NewSubscription);
 
 // Client subscribes to a plan
-router.post("/subscribeToPlan", SubscribeToPlan);
+router.post("/subscribeToPlan",checkIfUserIsAuthenticated, SubscribeToPlan);
 
 // Get all plans
 router.get("/getSubscriptions", GetSubscriptions);
