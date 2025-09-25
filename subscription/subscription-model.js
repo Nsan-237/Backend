@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // Subscription Schema
 const subscriptionSchema = new Schema({
 // Plan name            
-plan: {
+name: {
     type: "String",
     required: true
 },
@@ -32,22 +32,18 @@ status: {
     default: "pending"
 },
     // Original price (optional)
-originalPrice: { 
-    type: "Number" 
+originalprice: { 
+    type: "Number",
+    required: "true" 
 },
 // e.g., "25L"                  
-bucketSize: { 
+bucketsize: { 
     type: "String", 
     required: true 
 }, 
 // e.g., "2 times per week"
 frequency: { 
     type: "String", 
-    required: true 
-}, 
-  // Array of features    
-features: { 
-    type: [String], 
     required: true 
 }, 
   // Most popular badge   

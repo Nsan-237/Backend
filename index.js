@@ -1,4 +1,5 @@
 const express = require("express");
+const Subscription = require("./subscription/subscription-model");
 const mongoose = require("mongoose");
 const userRoutes = require("./user/user-route");
 const subscriptionRoutes = require("./subscription/subscription-route");
